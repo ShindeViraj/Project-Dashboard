@@ -34,10 +34,13 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
                 </div>
 
                 <div class="mb-3">
-                    <p class="mb-1 text-light small">Overall Progress</p>
-                    <div class="progress progress-glass mb-1">
-                        <div class="progress-bar" role="progressbar" style="width: <?= htmlspecialchars($project['progress'] ?? 0) ?>%;" aria-valuenow="<?= htmlspecialchars($project['progress'] ?? 0) ?>" aria-valuemin="0" aria-valuemax="100"><?= htmlspecialchars($project['progress'] ?? 0) ?>%</div>
-                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+    <p class="mb-0 text-light small">Overall Progress</p>
+    <span class="text-white fw-bold small"><?= htmlspecialchars($project['progress'] ?? 0) ?>%</span>
+</div>
+<div class="progress progress-glass mb-1">
+    <div class="progress-bar" role="progressbar" style="width: <?= htmlspecialchars($project['progress'] ?? 0) ?>%;" aria-valuenow="<?= htmlspecialchars($project['progress'] ?? 0) ?>" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
                 </div>
 
                 <?php if ($isAdmin): ?>
@@ -261,3 +264,4 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
         </div>
     </div>
 </div>
+

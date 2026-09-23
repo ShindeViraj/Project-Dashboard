@@ -36,8 +36,12 @@
                                 <td><?= htmlspecialchars($project['start_date']) ?></td>
                                 <td><?= htmlspecialchars($project['completed_at'] ?? '-') ?></td>
                                 <td>
-                                    <div class="progress progress-glass mt-1">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+    <span class="small text-white fw-bold"><?= htmlspecialchars($project['progress'] ?? 0) ?>%</span>
+</div>
+<div class="progress progress-glass">
+    <div class="progress-bar" role="progressbar" style="width: <?= htmlspecialchars($project['progress'] ?? 0) ?>%;" aria-valuenow="<?= htmlspecialchars($project['progress'] ?? 0) ?>" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
                                     </div>
                                 </td>
                             </tr>
@@ -52,3 +56,4 @@
         </div>
     </div>
 </div>
+

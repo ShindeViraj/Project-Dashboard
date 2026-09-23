@@ -34,8 +34,12 @@
                                 <td class="fw-bold"><?= htmlspecialchars($project['project_name']) ?></td>
                                 <td><?= htmlspecialchars($project['start_date']) ?></td>
                                 <td>
-                                    <div class="progress progress-glass mt-1">
-                                        <div class="progress-bar" role="progressbar" style="width: <?= htmlspecialchars($project['progress'] ?? 0) ?>%;" aria-valuenow="<?= htmlspecialchars($project['progress'] ?? 0) ?>" aria-valuemin="0" aria-valuemax="100"><?= htmlspecialchars($project['progress'] ?? 0) ?>%</div>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+    <span class="small text-white fw-bold"><?= htmlspecialchars($project['progress'] ?? 0) ?>%</span>
+</div>
+<div class="progress progress-glass">
+    <div class="progress-bar" role="progressbar" style="width: <?= htmlspecialchars($project['progress'] ?? 0) ?>%;" aria-valuenow="<?= htmlspecialchars($project['progress'] ?? 0) ?>" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
                                     </div>
                                 </td>
                             </tr>
@@ -54,3 +58,4 @@
         <a href="/dashboard/completed" class="btn btn-glass px-4 py-2"><i class="fas fa-check-double me-2"></i> Go To Completed Projects</a>
     </div>
 </div>
+
