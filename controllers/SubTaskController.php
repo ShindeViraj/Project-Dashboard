@@ -60,6 +60,7 @@ class SubTaskController extends Controller
         if ($canEdit) {
             $subTaskModel = new SubTask();
             $subTaskModel->toggleCompleted($subtaskId);
+            $this->updateProgress($projectId);
         }
         
         return $this->redirect('/project/' . $projectId);
@@ -83,5 +84,6 @@ class SubTaskController extends Controller
         return $this->redirect('/project/' . $projectId);
     }
 }
+
 
 
