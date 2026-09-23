@@ -1,0 +1,288 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    
+    --sidebar-bg: #1e293b;
+    --sidebar-hover: #334155;
+    --sidebar-text: #f8fafc;
+    --sidebar-text-muted: #94a3b8;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+/* Base Card */
+.glass-card, .glass-card-dark {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    color: var(--text-primary);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.glass-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* Typography Overrides */
+.text-white, .text-light {
+    color: var(--text-primary) !important;
+}
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Buttons */
+.btn-glass {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-glass:hover {
+    background: #f1f5f9;
+    color: var(--text-primary);
+    border-color: #cbd5e1;
+}
+
+.btn-primary, .btn-glass.text-success {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.btn-primary:hover, .btn-glass.text-success:hover {
+    background: var(--primary-hover) !important;
+}
+
+.btn-danger {
+    background: var(--danger-color);
+    color: #fff !important;
+    border: none;
+}
+
+/* Sidebar */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 280px;
+    max-width: 280px;
+    background: var(--sidebar-bg);
+    border-right: none;
+    color: var(--sidebar-text);
+    transition: all 0.3s;
+    z-index: 100;
+    position: relative;
+}
+
+#sidebar.active {
+    margin-left: -280px;
+}
+
+#sidebar .text-white, #sidebar .text-light, #sidebar h5 {
+    color: var(--sidebar-text) !important;
+}
+
+#sidebar .text-light.small {
+    color: var(--sidebar-text-muted) !important;
+}
+
+#sidebar .badge.glass-card {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    border: none !important;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+#sidebar .list-unstyled a {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-text-muted);
+    text-decoration: none;
+    border-radius: 8px;
+    margin: 4px 12px;
+    transition: 0.2s;
+    font-weight: 500;
+}
+
+#sidebar .list-unstyled a:hover {
+    background: var(--sidebar-hover);
+    color: var(--sidebar-text);
+}
+
+#sidebar .list-unstyled a i {
+    width: 24px;
+}
+
+/* Inputs and Forms */
+.form-control-glass, .form-select-glass {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+
+.form-control-glass:focus, .form-select-glass:focus {
+    background: #ffffff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    outline: none;
+}
+
+.form-label {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Tables */
+.table-responsive {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    overflow: hidden;
+}
+
+.table-glass {
+    color: var(--text-primary);
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.table-glass th {
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 24px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.table-glass td {
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+.table-glass tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-glass tbody tr {
+    background: #ffffff;
+    transition: background 0.2s;
+}
+
+.table-glass tbody tr:hover {
+    background: #f1f5f9;
+}
+
+/* Progress Bars */
+.progress-glass {
+    background: var(--border-color);
+    border: none;
+    height: 0.75rem;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-glass .progress-bar {
+    background: var(--primary-color);
+    color: transparent; /* Hide percentage text on the bar */
+}
+
+/* Badges & Alerts */
+.badge {
+    padding: 0.4em 0.8em;
+    border-radius: 6px;
+    font-weight: 500;
+}
+.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+/* Login Page specific overrides */
+body.glass-bg {
+    background-color: var(--bg-color);
+    background-image: none;
+}
+.login-card {
+    padding: 3rem;
+}
+
+/* Subtask specific styling */
+.list-group-item {
+    border-color: var(--border-color) !important;
+    padding: 1rem;
+}
+
+/* Header */
+header {
+    background: #ffffff !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-sm) !important;
+    border-radius: 0 !important;
+}
+header h2 {
+    color: var(--text-primary) !important;
+}
+
+/* Print Styles */
+@media print {
+    body { background: #fff !important; color: #000 !important; }
+    #sidebar, header, footer, .btn, .no-print { display: none !important; }
+    #content { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    .glass-card, .glass-card-dark { 
+        border: none !important; 
+        box-shadow: none !important; 
+    }
+}

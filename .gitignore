@@ -1,0 +1,42 @@
+# =========================
+# Composer dependencies
+# =========================
+/vendor/
+
+# =========================
+# Environment & Config
+# =========================
+.env
+!.env.example
+
+# =========================
+# Database (SQLite)
+# =========================
+/database/*.db
+
+# =========================
+# IDE & Editor files
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Logs & Cache
+# =========================
+*.log
+
+# =========================
+# Uploaded files
+# =========================
+/public/uploads/*
+!/public/uploads/.gitkeep
