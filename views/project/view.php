@@ -216,7 +216,7 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
                                         
                                         <?php if($step['is_applicable']): ?>
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input bg-success" type="checkbox" id="comp_<?= $step['id'] ?>" name="is_completed" value="1" <?= $step['is_completed'] ? 'checked' : '' ?> onchange="this.form.submit()">
+                                                <input class="form-check-input" type="checkbox" id="comp_<?= $step['id'] ?>" name="is_completed" value="1" <?= $step['is_completed'] ? 'checked' : '' ?> <?= !empty($subtasks[$step['id']]) ? 'disabled title="Complete all sub-tasks first"' : '' ?> onchange="this.form.submit()">
                                                 <label class="form-check-label text-light small" for="comp_<?= $step['id'] ?>">Completed</label>
                                             </div>
                                         <?php endif; ?>
@@ -296,4 +296,6 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
         </div>
     </div>
 </div>
+
+
 

@@ -47,28 +47,47 @@ class Project extends Model {
         return $stmt->fetchAll();
     }
 
-        public function calculateProgress($projectId) {
+            public function calculateProgress($projectId) {
         $db = Database::getInstance();
         
-        $stmt = $db->prepare("
-            SELECT 
-                (SELECT COUNT(*) FROM project_steps WHERE project_id = :project_id AND is_applicable = 1) as total_steps,
-                (SELECT COALESCE(SUM(is_completed), 0) FROM project_steps WHERE project_id = :project_id AND is_applicable = 1) as completed_steps,
-                (SELECT COUNT(*) FROM sub_tasks st JOIN project_steps ps ON st.project_step_id = ps.id WHERE ps.project_id = :project_id AND ps.is_applicable = 1) as total_subtasks,
-                (SELECT COALESCE(SUM(st.is_completed), 0) FROM sub_tasks st JOIN project_steps ps ON st.project_step_id = ps.id WHERE ps.project_id = :project_id AND ps.is_applicable = 1) as completed_subtasks
-        ");
+        // Get all applicable steps
+        $stmt = $db->prepare("SELECT id, is_completed FROM project_steps WHERE project_id = :project_id AND is_applicable = 1");
         $stmt->bindParam(':project_id', $projectId);
         $stmt->execute();
-        $data = $stmt->fetch();
+        $steps = $stmt->fetchAll();
         
-        $progress = 0;
-        if ($data) {
-            $totalItems = $data['total_steps'] + $data['total_subtasks'];
-            $completedItems = $data['completed_steps'] + $data['completed_subtasks'];
-            if ($totalItems > 0) {
-                $progress = round(($completedItems / $totalItems) * 100);
+        if (empty($steps)) {
+            $updateStmt = $db->prepare("UPDATE {$this->table} SET progress = 0 WHERE id = :id");
+            $updateStmt->execute([':id' => $projectId]);
+            return 0;
+        }
+
+        $totalStepPercentages = 0;
+
+        foreach ($steps as $step) {
+            // Get subtasks for this step
+            $subStmt = $db->prepare("SELECT COUNT(*) as total, COALESCE(SUM(is_completed), 0) as completed FROM sub_tasks WHERE project_step_id = :step_id");
+            $subStmt->execute([':step_id' => $step['id']]);
+            $subData = $subStmt->fetch();
+
+            if ($subData['total'] > 0) {
+                // Progress is based on subtasks
+                $stepProgress = ($subData['completed'] / $subData['total']) * 100;
+                
+                // Optional: auto-update the step's is_completed flag if all subtasks are done
+                $isStepCompleted = ($subData['completed'] == $subData['total']) ? 1 : 0;
+                if ($step['is_completed'] != $isStepCompleted) {
+                    $db->prepare("UPDATE project_steps SET is_completed = ? WHERE id = ?")->execute([$isStepCompleted, $step['id']]);
+                }
+                
+                $totalStepPercentages += $stepProgress;
+            } else {
+                // Progress is based on the step's own toggle
+                $totalStepPercentages += $step['is_completed'] ? 100 : 0;
             }
         }
+
+        $progress = round($totalStepPercentages / count($steps));
         
         $updateStmt = $db->prepare("UPDATE {$this->table} SET progress = :progress WHERE id = :id");
         $updateStmt->bindParam(':progress', $progress);
@@ -78,5 +97,6 @@ class Project extends Model {
         return $progress;
     }
 }
+
 
 
