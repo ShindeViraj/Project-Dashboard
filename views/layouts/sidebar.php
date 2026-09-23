@@ -1,7 +1,7 @@
 <nav id="sidebar" class="glass-sidebar active">
     <div class="p-4 pt-3">
         <div class="text-center mb-4">
-            <img src="/assets/images/logo.png" alt="Squarewave Logo" style="max-width: 100%; height: auto; max-height: 80px;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'60\'%3E%3Crect width=\'200\' height=\'60\' fill=\'%23ccc\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\' fill=\'%23333\'%3ESquarewave%3C/text%3E%3C/svg%3E';">
+            <img src="/assets/images/logo.png" alt="Squarewave Logo" class="bg-white p-2 rounded shadow-sm" style="max-width: 100%; height: auto; max-height: 80px;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'60\'%3E%3Crect width=\'200\' height=\'60\' fill=\'%23ccc\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\' fill=\'%23333\'%3ESquarewave%3C/text%3E%3C/svg%3E';">
         </div>
         
         <div class="user-info text-center mb-4 pb-3 border-bottom border-light">
@@ -39,3 +39,4 @@
         </div>
     </div>
 </nav>
+

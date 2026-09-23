@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -12,6 +14,10 @@ $dotenv->safeLoad();
 
 // Start Session
 $session = new Session();
+
+// Global Input Sanitization
+$_GET = \Core\Session::sanitize($_GET);
+$_POST = \Core\Session::sanitize($_POST);
 
 $router = new Router();
 
@@ -65,8 +71,18 @@ $router->post('/admin/steps/delete/{id}', 'AdminController@deleteStep');
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
+// Server-side CSRF validation for all POST requests
+if ($method === 'POST') {
+    $token = $_POST['csrf_token'] ?? '';
+    $sessionToken = Session::get('csrf_token');
+    if (empty($token) || empty($sessionToken) || !hash_equals($sessionToken, $token)) {
+        Session::flash('error', 'Invalid CSRF token or session expired.');
+        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/login'));
+        exit;
+    }
+}
+
 $router->dispatch($uri, $method);
 
 // Clear flash messages
 Session::clearFlash();
-
