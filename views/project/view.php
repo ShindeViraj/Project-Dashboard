@@ -18,7 +18,15 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
         <div class="col-lg-4 mb-4">
             <!-- Project Info -->
             <div class="glass-card p-4 mb-4">
-                <h5 class="text-white border-bottom border-light pb-2 mb-3">Project Details</h5>
+                <div class="d-flex justify-content-between align-items-center border-bottom border-light pb-2 mb-3">
+                    <h5 class="text-white mb-0">Project Details</h5>
+                    <?php if($_SESSION['user_role'] === 'admin'): ?>
+                        <form action="/project/<?= htmlspecialchars($project['id']) ?>/delete" method="POST" class="confirm-submit" data-confirm-msg="Are you sure you want to completely delete this project and all its data? This cannot be undone.">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Delete Project</button>
+                        </form>
+                    <?php endif; ?>
+                </div>
                 <p class="mb-1 text-light small">Company Name</p>
                 <p class="text-white fw-bold mb-3"><?= htmlspecialchars($project['company_name']) ?></p>
                 
@@ -292,6 +300,17 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="alert alert-warning glass-card text-white">No steps defined for this project.</div>
+            <?php endif; ?>
+
+            <?php if($isLeaderOrAdmin): ?>
+                <div class="glass-card p-3 mt-4" style="border-width: 2px; border-style: dashed;">
+                    <h6 class="text-white mb-2"><i class="fas fa-plus-circle me-1"></i> Add Custom Step</h6>
+                    <form action="/project/<?= htmlspecialchars($project['id']) ?>/step/add" method="POST" class="d-flex">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
+                        <input type="text" name="step_name" class="form-control form-control-sm form-control-glass me-2" placeholder="Enter new step name..." required>
+                        <button type="submit" class="btn btn-sm btn-glass text-success text-nowrap">Add Step</button>
+                    </form>
+                </div>
             <?php endif; ?>
         </div>
     </div>

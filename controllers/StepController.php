@@ -43,5 +43,42 @@ class StepController extends Controller
         
         return $this->redirect('/project/' . $projectId);
     }
-}
 
+
+    public function addCustom($projectId)
+    {
+        Middleware::authRequired();
+        $this->requireCsrf();
+        
+        $teamModel = new ProjectTeam();
+        $isLeader = $teamModel->isLeader($projectId, Session::get('user_id'));
+        $isAdmin = Session::get('user_role') === 'admin';
+        
+        if (!$isAdmin && !$isLeader) {
+            Session::flash('error', 'Only admins or project leaders can add new steps.');
+            return $this->redirect('/project/' . $projectId);
+        }
+        
+        $step_name = $_POST['step_name'] ?? '';
+        if (!empty(trim($step_name))) {
+            $stepModel = new ProjectStep();
+            $stepModel->create([
+                'project_id' => $projectId,
+                'step_name' => $step_name,
+                'is_applicable' => 1,
+                'is_completed' => 0
+            ]);
+            
+            $projectModel = new Project();
+            if (method_exists($projectModel, 'calculateProgress')) {
+                $projectModel->calculateProgress($projectId);
+            }
+            
+            Session::flash('success', 'Custom step added successfully.');
+        } else {
+            Session::flash('error', 'Step name cannot be empty.');
+        }
+        
+        return $this->redirect('/project/' . $projectId);
+    }
+}

@@ -47,6 +47,10 @@ $router->post('/project/{id}/complete', 'ProjectController@complete');
 $router->post('/project/{id}/toggle-status', 'ProjectController@toggleStatus');
 $router->post('/project/{id}/mom', 'ProjectController@addMom');
 
+
+$router->post('/project/{id}/delete', 'ProjectController@delete');
+$router->post('/project/{id}/step/add', 'StepController@addCustom');
+
 // Steps
 $router->post('/project/{id}/step/{step_id}/toggle', 'StepController@toggle');
 
@@ -91,5 +95,6 @@ $router->dispatch($uri, $method);
 
 // Clear flash messages
 Session::clearFlash();
+
 
 

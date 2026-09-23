@@ -275,5 +275,19 @@ class ProjectController extends Controller
         
         return false;
     }
+    public function delete($id)
+    {
+        Middleware::adminRequired();
+        $this->requireCsrf();
+        
+        $projectModel = new Project();
+        $project = $projectModel->find($id);
+        
+        if ($project) {
+            $projectModel->delete($id);
+            Session::flash('success', 'Project deleted successfully.');
+        }
+        
+        $this->redirect('/dashboard');
+    }
 }
-
