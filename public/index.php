@@ -42,6 +42,11 @@ $router->post('/project/store', 'ProjectController@store');
 $router->get('/project/{id}', 'ProjectController@show');
 $router->post('/project/{id}/complete', 'ProjectController@complete');
 
+
+// Status and MOM
+$router->post('/project/{id}/toggle-status', 'ProjectController@toggleStatus');
+$router->post('/project/{id}/mom', 'ProjectController@addMom');
+
 // Steps
 $router->post('/project/{id}/step/{step_id}/toggle', 'StepController@toggle');
 
@@ -86,4 +91,5 @@ $router->dispatch($uri, $method);
 
 // Clear flash messages
 Session::clearFlash();
+
 
