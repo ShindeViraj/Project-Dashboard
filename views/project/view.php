@@ -44,21 +44,47 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
                 </div>
 
                 <?php if ($isAdmin): ?>
-                    <form action="/project/<?= htmlspecialchars($project['id']) ?>/toggle-status" method="POST" class="mb-2">
+                    <form action="/project/<?= htmlspecialchars($project['id']) ?>/toggle-status" method="POST" enctype="multipart/form-data" class="mb-2">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
-                        <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" id="po_status" name="po_status" value="1" <?= ($project['po_status'] ?? 0) ? 'checked' : '' ?> onchange="this.form.submit()">
-                            <label class="form-check-label text-light" for="po_status">PO Status</label>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch mb-1">
+                                <input class="form-check-input" type="checkbox" id="po_status" name="po_status" value="1" <?= ($project['po_status'] ?? 0) ? 'checked' : '' ?>>
+                                <label class="form-check-label text-light" for="po_status">PO Status</label>
+                            </div>
+                            <?php if(!empty($project['po_document_path'])): ?>
+                                <a href="<?= htmlspecialchars($project['po_document_path']) ?>" target="_blank" class="small text-info ms-4 d-block"><i class="fas fa-file-pdf"></i> View PO Document</a>
+                            <?php endif; ?>
+                            <input type="file" name="po_document" class="form-control form-control-sm form-control-glass ms-4 mt-1" style="width: 80%; font-size: 0.75rem;" accept=".pdf,.png,.jpg,.jpeg">
                         </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="tax_invoice_status" name="tax_invoice_status" value="1" <?= ($project['tax_invoice_status'] ?? 0) ? 'checked' : '' ?> onchange="this.form.submit()">
-                            <label class="form-check-label text-light" for="tax_invoice_status">Tax Invoice Status</label>
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-switch mb-1">
+                                <input class="form-check-input" type="checkbox" id="tax_invoice_status" name="tax_invoice_status" value="1" <?= ($project['tax_invoice_status'] ?? 0) ? 'checked' : '' ?>>
+                                <label class="form-check-label text-light" for="tax_invoice_status">Tax Invoice Status</label>
+                            </div>
+                            <?php if(!empty($project['tax_invoice_document_path'])): ?>
+                                <a href="<?= htmlspecialchars($project['tax_invoice_document_path']) ?>" target="_blank" class="small text-info ms-4 d-block"><i class="fas fa-file-pdf"></i> View Tax Invoice</a>
+                            <?php endif; ?>
+                            <input type="file" name="tax_invoice_document" class="form-control form-control-sm form-control-glass ms-4 mt-1" style="width: 80%; font-size: 0.75rem;" accept=".pdf,.png,.jpg,.jpeg">
                         </div>
+                        
+                        <button type="submit" class="btn btn-sm btn-glass text-white w-100 mt-2">Save Status & Documents</button>
                     </form>
                 <?php else: ?>
                     <div class="mb-2">
-                        <p class="mb-1 text-light small">PO Status: <span class="badge <?= ($project['po_status'] ?? 0) ? 'bg-success' : 'bg-secondary' ?>"><?= ($project['po_status'] ?? 0) ? 'Yes' : 'No' ?></span></p>
-                        <p class="mb-1 text-light small">Tax Invoice Status: <span class="badge <?= ($project['tax_invoice_status'] ?? 0) ? 'bg-success' : 'bg-secondary' ?>"><?= ($project['tax_invoice_status'] ?? 0) ? 'Yes' : 'No' ?></span></p>
+                        <p class="mb-1 text-light small">
+                            PO Status: <span class="badge <?= ($project['po_status'] ?? 0) ? 'bg-success' : 'bg-secondary' ?>"><?= ($project['po_status'] ?? 0) ? 'Yes' : 'No' ?></span>
+                            <?php if(!empty($project['po_document_path'])): ?>
+                                <a href="<?= htmlspecialchars($project['po_document_path']) ?>" target="_blank" class="ms-2 text-info"><i class="fas fa-file-pdf"></i></a>
+                            <?php endif; ?>
+                        </p>
+                        <p class="mb-1 text-light small">
+                            Tax Invoice: <span class="badge <?= ($project['tax_invoice_status'] ?? 0) ? 'bg-success' : 'bg-secondary' ?>"><?= ($project['tax_invoice_status'] ?? 0) ? 'Yes' : 'No' ?></span>
+                            <?php if(!empty($project['tax_invoice_document_path'])): ?>
+                                <a href="<?= htmlspecialchars($project['tax_invoice_document_path']) ?>" target="_blank" class="ms-2 text-info"><i class="fas fa-file-pdf"></i></a>
+                            <?php endif; ?>
+                        </p>
                     </div>
                 <?php endif; ?>
 
@@ -142,6 +168,11 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
                                     <small class="text-light"><?= htmlspecialchars($mom['author_name'] ?? 'User') ?></small>
                                 </div>
                                 <p class="mb-0 text-white small mt-1"><?= nl2br(htmlspecialchars($mom['content'])) ?></p>
+                                <?php if(!empty($mom['attachment_path'])): ?>
+                                    <div class="mt-2 text-end">
+                                        <a href="<?= htmlspecialchars($mom['attachment_path']) ?>" target="_blank" class="small text-info text-decoration-none"><i class="fas fa-paperclip"></i> View Attachment</a>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -150,9 +181,10 @@ $isLeaderOrAdmin = $isAdmin || $isLeader;
                 </div>
                 
                 <?php if($isLeaderOrAdmin): ?>
-                    <form action="/project/<?= htmlspecialchars($project['id']) ?>/mom" method="POST">
+                    <form action="/project/<?= htmlspecialchars($project['id']) ?>/mom" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
                         <textarea class="form-control form-control-glass mb-2 text-white" name="content" rows="2" placeholder="Add MOM note..." required></textarea>
+                        <input type="file" name="mom_attachment" class="form-control form-control-sm form-control-glass mb-2" accept=".pdf,.png,.jpg,.jpeg">
                         <button type="submit" class="btn btn-sm btn-glass w-100">Add MOM</button>
                     </form>
                 <?php endif; ?>

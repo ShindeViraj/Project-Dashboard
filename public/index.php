@@ -86,3 +86,4 @@ $router->dispatch($uri, $method);
 
 // Clear flash messages
 Session::clearFlash();
+
