@@ -41,7 +41,7 @@
                                 </td>
                                 <td>
                                     <?php if(!$step['is_default']): ?>
-                                        <form action="/admin/steps/delete" method="POST" class="confirm-submit" data-confirm-msg="Are you sure you want to delete this step template?">
+                                        <form action="/admin/steps/delete/<?= $step['id'] ?>" method="POST" class="confirm-submit" data-confirm-msg="Are you sure you want to delete this step template?">
                                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
                                             <input type="hidden" name="id" value="<?= $step['id'] ?>">
                                             <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
@@ -75,7 +75,7 @@
                 <h5 class="modal-title text-white" id="addStepModalLabel">Add New Step Template</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/steps/store" method="POST">
+            <form action="/admin/steps/add" method="POST">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -96,3 +96,4 @@
         </div>
     </div>
 </div>
+

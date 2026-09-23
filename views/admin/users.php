@@ -45,7 +45,7 @@
                                 </td>
                                 <td>
                                     <?php if($u['id'] != $_SESSION['user_id']): ?>
-                                        <form action="/admin/users/delete" method="POST" class="confirm-submit" data-confirm-msg="Are you sure you want to delete this user?">
+                                        <form action="/admin/users/delete/<?= $u['id'] ?>" method="POST" class="confirm-submit" data-confirm-msg="Are you sure you want to delete this user?">
                                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
                                             <input type="hidden" name="id" value="<?= $u['id'] ?>">
                                             <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
@@ -79,7 +79,7 @@
                 <h5 class="modal-title text-white" id="addUserModalLabel">Add New User</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/admin/users/store" method="POST">
+            <form action="/admin/users/add" method="POST">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -114,3 +114,4 @@
         </div>
     </div>
 </div>
+
